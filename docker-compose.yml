@@ -35,6 +35,14 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    healthcheck:
+        test:
+          - CMD-SHELL
+          - /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1
+        interval: 10s
+        timeout: 10s
+        retries: 15
+        start_period: 20s
 
   rabbitmq:
     image: rabbitmq:4-management
@@ -68,7 +76,7 @@ services:
       rabbitmq:
         condition: service_healthy
       kafka:
-        condition: service_started
+        condition: service_healthy
 
   loan-processing-service:
     build: ./loan-processing-service
@@ -82,7 +90,7 @@ services:
       rabbitmq:
         condition: service_healthy
       kafka:
-        condition: service_started
+        condition: service_healthy
 
 volumes:
   postgres-data:
