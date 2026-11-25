@@ -1,0 +1,31 @@
+### Создание заявки на кредит
+POST http://localhost:8080/api/loans
+Content-Type: application/json
+
+{
+  "loanAmount": 600000,
+  "termMonths": 60,
+  "monthlyIncome": 100000,
+  "currentCreditLoad": 10000,
+  "creditRating": 750
+}
+
+### Получение статуса заявки
+GET http://localhost:8080/api/loans/1
+Accept: application/json
+
+### Создание заявки с высокой кредитной нагрузкой
+POST http://localhost:8080/api/loans
+Content-Type: application/json
+
+{
+  "loanAmount": 1200000,
+  "termMonths": 60,
+  "monthlyIncome": 50000,
+  "currentCreditLoad": 20000,
+  "creditRating": 650
+}
+
+### Проверка статуса второй заявки
+GET http://localhost:8080/api/loans/2
+Accept: application/json
